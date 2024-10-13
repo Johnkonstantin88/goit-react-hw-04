@@ -1,0 +1,25 @@
+.ReactModal__Body,
+.ReactModal__Html {
+  overflow: hidden;
+}
+
+/* .ReactModal__Body--close,
+.ReactModal__Html--close {
+  overflow: auto;
+} */
+
+/* .ReactModal__Content {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 90vh;
+  height: auto;
+  object-fit: cover;
+} */
+
+.overflowNormalize {
+  overflow: scroll;
+}

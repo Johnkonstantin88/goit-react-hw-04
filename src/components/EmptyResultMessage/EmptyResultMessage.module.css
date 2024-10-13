@@ -1,0 +1,17 @@
+.container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img {
+  width: 300px;
+}
+
+.text {
+  padding-top: 20px;
+  text-align: center;
+  font: inherit;
+  font-size: 24px;
+}
