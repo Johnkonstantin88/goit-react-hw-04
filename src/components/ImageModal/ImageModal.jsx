@@ -20,15 +20,11 @@ const customStyles = {
     width: '90vh',
     height: 'auto',
     objectFit: 'cover',
+    overflow: 'hidden',
   },
 };
 
-const afterOpen = () => document.body.classList.toggle(css.overflowNormalize);
-
-const afterClose = () => {
-  document.body.classList.remove(css.ReactModal__Body),
-    document.body.classList.add(css.overflowNormalize);
-};
+ReactModal.setAppElement('#root');
 
 const ImageModal = ({ isOpen, closeModal, modalData }) => {
   const {
@@ -37,17 +33,12 @@ const ImageModal = ({ isOpen, closeModal, modalData }) => {
     alt_description,
   } = modalData;
 
-  ReactModal.setAppElement('#root');
-
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={closeModal}
       style={customStyles}
-      onAfterOpen={afterOpen}
-      onAfterClose={afterClose}
       bodyOpenClassName={css.ReactModal__Body}
-      // htmlOpenClassName={css.ReactModal__Html}
     >
       <div>
         <img src={regular} alt={alt_description} />

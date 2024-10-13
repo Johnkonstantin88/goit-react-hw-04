@@ -68,6 +68,17 @@ const ImageGallery = ({ searchValue }) => {
     }
   };
 
+  const scrollMore = () => {
+    window.scrollBy({
+      top: 338,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    if (currentPage > 2) scrollMore();
+  }, [images, currentPage]);
+
   const onShowModal = e => {
     setIsShowModal(true);
 
