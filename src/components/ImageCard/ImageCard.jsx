@@ -1,6 +1,6 @@
 import css from './ImageCard.module.css';
 
-const ImageCard = ({ urls: { small }, alt_description, showModal }) => {
+const ImageCard = ({ urls: { small }, alt_description, onShowModal }) => {
   return (
     <div>
       <img
@@ -8,7 +8,7 @@ const ImageCard = ({ urls: { small }, alt_description, showModal }) => {
         src={small}
         alt={alt_description}
         loading="lazy"
-        onClick={showModal}
+        onClick={onShowModal}
       />
     </div>
   );
