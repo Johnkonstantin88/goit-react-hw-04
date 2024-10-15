@@ -25,15 +25,15 @@ const App = () => {
 
   const handleSearch = value => {
     setSearchValue(value);
+    setImages(null);
+    setIsError(false);
+    setCurrentPage(1);
+    setModalData(null);
   };
 
   useEffect(() => {
     if (searchValue) {
-      setImages(null);
-      setIsError(false);
       setIsLoading(true);
-      setCurrentPage(1);
-      setModalData(null);
     }
 
     const getPhotos = async () => {
@@ -42,9 +42,15 @@ const App = () => {
           return;
         }
 
-        const { results, total } = await getPhotosBySearchValue(searchValue);
+        const { results, total } = await getPhotosBySearchValue(
+          searchValue,
+          currentPage
+        );
 
-        setImages(results);
+        currentPage === 1
+          ? setImages(results)
+          : setImages(prevState => [...prevState, ...results]);
+
         setTotalImages(total);
       } catch (error) {
         toast.error(error.message);
@@ -54,25 +60,10 @@ const App = () => {
       }
     };
     getPhotos();
-    setCurrentPage(prevPage => prevPage + 1);
-  }, [searchValue]);
+  }, [searchValue, currentPage]);
 
-  const onLoadMore = async () => {
+  const onLoadMore = () => {
     setCurrentPage(prevPage => prevPage + 1);
-    setIsLoading(true);
-
-    try {
-      const { results } = await getPhotosBySearchValue(
-        searchValue,
-        currentPage
-      );
-      setImages(prevState => [...prevState, ...results]);
-    } catch (error) {
-      toast.error(error.message);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const scrollMore = () => {
@@ -83,7 +74,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (currentPage > 2) scrollMore();
+    if (currentPage > 1) scrollMore();
   }, [images, currentPage]);
 
   const onShowModal = e => {
@@ -104,9 +95,9 @@ const App = () => {
       <SearchBar onSearch={handleSearch} />
       <ImageGallery images={images} onShowModal={onShowModal} />
       {isLoading && <Loader />}
-      {images && images.length === 0 && <EmptyResultMessage />}
+      {images && totalImages === 0 && <EmptyResultMessage />}
       {isError && <ErrorMessage />}
-      {images !== null && images.length !== totalImages && (
+      {images?.length !== totalImages && totalImages !== null && (
         <LoadMoreButton onLoadMore={onLoadMore} />
       )}
       {modalData && (
